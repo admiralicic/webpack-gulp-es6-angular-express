@@ -73,7 +73,7 @@ class WorkspaceDirective {
       var newHeight = $(gridItem).height();
       var boxHeader = $(gridItem).find('.box-header');
       var boxBody = $(gridItem).find('.box-body');
-      boxBody.height(newHeight-3.03*boxHeader.height());
+      boxBody.height(newHeight-3.1*boxHeader.height());
     };
 
     var fullscreenPanel = function (domElement) {
