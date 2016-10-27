@@ -96,7 +96,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['ng-annotate?es6=true', 'babel?cacheDirectory']
+        loaders: ['babel?cacheDirectory']
       },
       // use json loader to automatically parse JSON files content when importing them
       {
