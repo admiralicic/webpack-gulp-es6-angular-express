@@ -1,29 +1,32 @@
-import template from './parallelcoords.html';
-import controller from './parallelcoords.controller';
+import {createPanelComponent} from '../panels';
 
+import template from './parallelcoords.html';
 import './parallelcoords.css';
 import * as curves from 'common/curves';
 
 import d3 from 'd3';
 
-class ParallelCoordsDirective {
+class ParallelCoordsController {
 
-  constructor() {
-    this.restrict = 'E';
-    this.template = template;
-    this.scope = {};
-    this.controller = controller;
-    this.controllerAs = 'vm';
-    this.bindToController = true;
+  constructor($element, datasetsSrv) {
+    'ngInject';
+    this.$element = $element;
+    this.datasetsSrv = datasetsSrv;
   }
 
-  link(scope, element) {
-    scope.$on('data_ready', () => this.createVisualization(scope, element));
-    scope.vm.requestData();
+  $postLink() {
+    this.requestData();
+  }
+
+  requestData() {
+    this.datasetsSrv.getAllNumericData(this.panelCtrl.workspaceCtrl.datasetId).then(data => {
+      this.data = data;
+      this.createVisualization(this.$element[0]);
+    });
   }
 
   // adapted from http://bl.ocks.org/jasondavies/1341281
-  createVisualization(scope, element) {
+  createVisualization(element) {
 
     let margin = {
         top: 30,
@@ -52,7 +55,7 @@ class ParallelCoordsDirective {
       return g.transition().duration(500);
     };
 
-    let cars = scope.vm.data;
+    let cars = this.data;
 
     let dimensions = d3.keys(cars[0]).filter((d) => {
       return d !== "car" && d !== "id" && d !== "origin" && (y[d] = d3.scale.linear()
@@ -98,10 +101,6 @@ class ParallelCoordsDirective {
       .classed("svg-content-responsive", true)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    scope.$on('$destroy', () => {
-      svg = null;
-    });
 
     // Extract the list of dimensions and create a scale for each.
     x.domain(dimensions);
@@ -178,13 +177,13 @@ class ParallelCoordsDirective {
       .attr("x", -8)
       .attr("width", 16);
 
-   scope.setStraightLines = () => {svg.selectAll(".foreground").selectAll("path").attr("d", path);
+   this.setStraightLines = () => {svg.selectAll(".foreground").selectAll("path").attr("d", path);
                                    svg.selectAll(".background").selectAll("path").attr("d", path);};
 
-   scope.setCurvedLines = () => {svg.selectAll(".foreground").selectAll("path").attr("d", curvePath);
+   this.setCurvedLines = () => {svg.selectAll(".foreground").selectAll("path").attr("d", curvePath);
                                  svg.selectAll(".background").selectAll("path").attr("d", curvePath);};
 
   }
 }
 
-export default ParallelCoordsDirective;
+export default createPanelComponent(template, ParallelCoordsController);

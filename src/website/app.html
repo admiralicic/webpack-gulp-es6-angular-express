@@ -1,4 +1,4 @@
-<div class="wrapper" ng-controller="appCtrl">
+<div class="wrapper">
     <header class="main-header">
         <nav class="navbar navbar-static-top">
             <div class="container-fluid">
@@ -12,7 +12,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li ng-repeat="dataset in datasets" ui-sref-active="active">
+                        <li ng-repeat="dataset in $ctrl.datasets" ui-sref-active="active">
                             <a class="dataset-link" ui-sref="{{dataset.url}}">{{dataset.name}}  <i class="fa fa-{{dataset.icon}}"></i></a></li>
                         </li>
                     </ul>

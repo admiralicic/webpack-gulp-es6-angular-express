@@ -29,8 +29,7 @@ var webpackPlugins = [
   new webpack.ProvidePlugin({
     '$': 'jquery',
     'jQuery': 'jquery',
-    '_': 'lodash',
-    'registerAngularModule': 'exports?registerAngularModule!registerAngularModule'
+    '_': 'lodash'
   })
 ];
 
@@ -73,8 +72,7 @@ module.exports = {
     alias: {
       // set angular to the minified dist for faster build
       'angular': pathToAngular,
-      // alias the registerAngularModule script
-      'registerAngularModule': path.resolve(__dirname, 'src/website/utils/registerAngularModule.js'),
+
       // define aliases for jquery-ui modules in order to use gridstack with freshly released jquery-ui 1.12
       'jquery-ui/core': path.resolve(__dirname, 'node_modules/jquery-ui/ui/core.js'),
       'jquery-ui/data': path.resolve(__dirname, 'node_modules/jquery-ui/ui/data.js'),
@@ -196,7 +194,6 @@ module.exports = {
       '$': false,
       'jQuery': false,
       'angular': false,
-      'registerAngularModule': false
     }
   }
 };

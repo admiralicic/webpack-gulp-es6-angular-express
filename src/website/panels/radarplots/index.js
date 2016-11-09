@@ -1,6 +1,6 @@
-import RadarplotsDirective from './radarplots.directive';
+import RadarplotsComponent from './radarplots.component';
 
-const radarplotsModule = registerAngularModule('radarplots', [])
-  .directive('radarplots', RadarplotsDirective);
+const radarplotsModule = angular.module('radarplots', [])
+  .component('radarplots', RadarplotsComponent);
 
 export default radarplotsModule;

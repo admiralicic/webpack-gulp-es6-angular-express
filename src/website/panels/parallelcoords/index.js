@@ -1,6 +1,6 @@
-import ParallelCoordsDirective from './parallelcoords.directive';
+import ParallelCoordsComponent from './parallelcoords.component';
 
-const parallelcoordsModule = registerAngularModule('parallelcoords', [])
-  .directive('parallelcoords', ParallelCoordsDirective);
+const parallelcoordsModule = angular.module('parallelcoords', [])
+  .component('parallelcoords', ParallelCoordsComponent);
 
 export default parallelcoordsModule;

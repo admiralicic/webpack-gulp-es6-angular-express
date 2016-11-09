@@ -1,4 +1,4 @@
-const servicesModule = registerAngularModule('app.services', []);
+const servicesModule = angular.module('app.services', []);
 
 function requireAll(requireContext) {
   return requireContext.keys().map(requireContext);

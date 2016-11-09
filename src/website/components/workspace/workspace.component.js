@@ -3,23 +3,27 @@ import 'gridstack';
 
 import './workspace.css';
 
-import workspaceTemplate from './workspace.template.html';
+import WorkspaceTemplate from './workspace.template.html';
 
-class WorkspaceDirective {
+class WorkspaceController {
 
-  constructor($compile, panelsManager) {
+  constructor($element, $compile, $scope, panelsManager) {
     'ngInject';
+    this.$element = $element;
     this.$compile = $compile;
-    this.restrict = 'E';
-    this.controller = 'workspaceController';
-    this.template = workspaceTemplate;
+    this.$scope = $scope;
     this.panelsManager = panelsManager;
-    this.scope = {
-      datasetId: '@'
-    };
+    this.availablePanelsNames = [];
+    this.panelNameToId = {};
+    _.each(panelsManager.getPanelsList(), panelId => {
+      var panel = panelsManager.getPanel(panelId);
+      this.availablePanelsNames.push(panel.name);
+      var panelNameWoSpaces = panel.name.replace(/ /g, "");
+      this.panelNameToId[panelNameWoSpaces] = panelId;
+    });
   }
 
-  link(scope, element) {
+  $postLink() {
 
     var options = {
       cellHeight: 200,
@@ -34,15 +38,15 @@ class WorkspaceDirective {
     grid.on('resizestop', (event, ui) => {
       var element = event.target;
       setTimeout(() => {
-        scope.resizeGridItemContent(element);
+        this.resizeGridItemContent(element);
       }, 10);
     });
 
-    scope.getPanelName = function(panelId) {
+    this.getPanelName = function(panelId) {
       return this.panelsManager.getPanelName(panelId).name;
     };
 
-    scope.addPanel = (panelName) => {
+    this.addPanel = (panelName) => {
       var panelContent = $(
         '<div class="grid-stack-item" data-gs-width="4" data-gs-height="2">\
         <div class="grid-stack-item-content">\
@@ -52,24 +56,24 @@ class WorkspaceDirective {
       );
       grid.append(panelContent);
       var gridItem = gridApi.makeWidget(panelContent)[0];
-      this.$compile($(gridItem).contents())(scope);
+      this.$compile($(gridItem).contents())(this.$scope.$new(true, this.$scope));
 
       $('.grid-stack-item-content').css("overflow", "hidden");
 
       setTimeout(() => {
-        scope.resizeGridItemContent(gridItem);
+        this.resizeGridItemContent(gridItem);
       }, 500);
 
     };
 
-    scope.addSelectedPanel = function() {
+    this.addSelectedPanel = function() {
       var panelNameWoSpaces = $('.panel-button').text().replace(/ /g, "");
-      scope.addPanel(scope.panelNameToId[panelNameWoSpaces]);
+      this.addPanel(this.panelNameToId[panelNameWoSpaces]);
     };
 
-    scope.isFullScreenMode = false;
+    this.isFullScreenMode = false;
 
-    scope.resizeGridItemContent = function(gridItem) {
+    this.resizeGridItemContent = function(gridItem) {
       var newHeight = $(gridItem).height();
       var boxHeader = $(gridItem).find('.box-header');
       var boxBody = $(gridItem).find('.box-body');
@@ -77,10 +81,10 @@ class WorkspaceDirective {
     };
 
     var fullscreenPanel = function (domElement) {
-      scope.fullscreenElt = domElement;
-      if (scope.isFullScreenMode === true) {
+      this.fullscreenElt = domElement;
+      if (this.isFullScreenMode === true) {
         // exit fullscreen
-        scope.isFullScreenMode = false;
+        this.isFullScreenMode = false;
 
         if (document.exitFullscreen) {
           document.exitFullscreen();
@@ -94,7 +98,7 @@ class WorkspaceDirective {
         return;
       }
 
-      scope.isFullScreenMode = true;
+      this.isFullScreenMode = true;
       if (domElement.requestFullscreen) {
         domElement.requestFullscreen();
       } else if (domElement.msRequestFullscreen) {
@@ -106,11 +110,11 @@ class WorkspaceDirective {
       }
     };
 
-    function exitHandler() {
+    var exitHandler = function() {
       var isFullScreen = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen; // This will return true or false depending on if it's full screen or not.
-      scope.isFullScreenMode = isFullScreen;
-      scope.resizeGridItemContent(scope.fullscreenElt);
-    }
+      this.isFullScreenMode = isFullScreen;
+      this.resizeGridItemContent(this.fullscreenElt);
+    };
 
     $('body').on('click', '.panel-fullscreen', function(e) {
       e.preventDefault();
@@ -131,7 +135,14 @@ class WorkspaceDirective {
       document.addEventListener('MSFullscreenChange', exitHandler, false);
     }
   }
-
 }
 
-export default WorkspaceDirective;
+var WorkspaceComponent = {
+    controller : WorkspaceController,
+    template : WorkspaceTemplate,
+    bindings : {
+      datasetId: '@'
+    }
+};
+
+export default WorkspaceComponent;

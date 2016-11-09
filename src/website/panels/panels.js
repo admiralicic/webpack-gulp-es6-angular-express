@@ -14,7 +14,7 @@ var moduleNames = _.map(moduleDescriptionContext.keys(), (k, i) => {
 
 const panels = _.map(requireAll(moduleDescriptionContext), m => m.default);
 
-const panelsModule = registerAngularModule('app.panels', [ocLazyLoad])
+const panelsModule = angular.module('app.panels', [ocLazyLoad])
    .run((panelsManager, $ocLazyLoad, $q) => {
 
      'ngInject';
@@ -31,6 +31,16 @@ const panelsModule = registerAngularModule('app.panels', [ocLazyLoad])
        panelsManager.registerPanel(moduleNames[i], c);
      });
    });
+
+export function createPanelComponent(template, controller) {
+  return  {
+    require: {
+      panelCtrl: '^panel'
+    },
+    template : template,
+    controller: controller
+  };
+}
 
 export default {
   module: panelsModule,
