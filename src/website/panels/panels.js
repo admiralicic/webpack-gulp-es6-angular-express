@@ -9,40 +9,42 @@ var moduleDescriptionContext = require.context("./", true, /^.*\/description\.js
 var moduleNames = _.map(moduleDescriptionContext.keys(), (k, i) => {
   var pos = k.indexOf('/');
   var pos2 = k.lastIndexOf('/');
-  return k.substr(pos+1, pos2-pos-1);
+  return k.substr(pos + 1, pos2 - pos - 1);
 });
 
 const panels = _.map(requireAll(moduleDescriptionContext), m => m.default);
 
 const panelsModule = angular.module('app.panels', [ocLazyLoad])
-   .run((panelsManager, $ocLazyLoad, $q) => {
+  .run((panelsManager, $ocLazyLoad, $q) => {
 
-     'ngInject';
+    'ngInject';
 
-     _.each(panels, (c, i) => {
-       c.load = function() {
-         var loadComponent = require('bundle?lazy&name=[folder]!./'+moduleNames[i]+'/index');
-         return $q((resolve) => {
-           loadComponent(function(module) {
-             resolve($ocLazyLoad.load({name: module.default.name}));
-           });
-         });
-       };
-       panelsManager.registerPanel(moduleNames[i], c);
-     });
-   });
+    _.each(panels, (c, i) => {
+      c.load = function() {
+        var loadComponent = require('bundle?lazy&name=[folder]!./' + moduleNames[i] + '/index');
+        return $q((resolve) => {
+          loadComponent(function(module) {
+            resolve($ocLazyLoad.load({
+              name: module.default.name
+            }));
+          });
+        });
+      };
+      panelsManager.registerPanel(moduleNames[i], c);
+    });
+  });
 
 export function createPanelComponent(template, controller) {
-  return  {
+  return {
     require: {
       panelCtrl: '^panel'
     },
-    template : template,
+    template: template,
     controller: controller
   };
 }
 
 export default {
   module: panelsModule,
-  panelsList : panels
+  panelsList: panels
 };

@@ -16,38 +16,35 @@ import AppTemplate from './app.html';
 class AppController {
 
   constructor() {
-    this.datasets = [
-      {
-        name: 'Cars',
-        url: 'cars',
-        icon: 'car'
-      },
-      {
-        name: 'Cameras',
-        url: 'cameras',
-        icon: 'camera'
-      }
-    ];
+    this.datasets = [{
+      name: 'Cars',
+      url: 'cars',
+      icon: 'car'
+    }, {
+      name: 'Cameras',
+      url: 'cameras',
+      icon: 'camera'
+    }];
   }
 
 }
 
 const app = angular.module('app', [services.name, components.module.name, panels.module.name, uiRouter])
-              .component('app', {
-                template: AppTemplate,
-                controller: AppController
-              })
-              .config(($stateProvider, $urlRouterProvider) => {
-                'ngInject';
-                $urlRouterProvider.otherwise('/cars');
-                $stateProvider.state('cars', {
-                                      url: '/cars',
-                                      template: '<workspace data-dataset-id="cars"/>',
-                                     })
-                              .state('cameras', {
-                                      url: '/cameras',
-                                      template: '<workspace data-dataset-id="cameras"/>',
-                                    });
-              });
+  .component('app', {
+    template: AppTemplate,
+    controller: AppController
+  })
+  .config(($stateProvider, $urlRouterProvider) => {
+    'ngInject';
+    $urlRouterProvider.otherwise('/cars');
+    $stateProvider.state('cars', {
+        url: '/cars',
+        template: '<workspace data-dataset-id="cars"/>',
+      })
+      .state('cameras', {
+        url: '/cameras',
+        template: '<workspace data-dataset-id="cameras"/>',
+      });
+  });
 
 export default app;

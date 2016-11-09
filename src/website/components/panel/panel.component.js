@@ -27,12 +27,12 @@ class PanelController {
 }
 
 var PanelComponent = {
-  template : panelTemplate,
-  bindings : {
+  template: panelTemplate,
+  bindings: {
     name: '@'
   },
-  require : {
-    workspaceCtrl : '^workspace'
+  require: {
+    workspaceCtrl: '^workspace'
   },
   controller: PanelController
 };

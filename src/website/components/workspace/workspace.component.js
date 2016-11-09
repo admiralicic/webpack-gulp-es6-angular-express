@@ -77,10 +77,10 @@ class WorkspaceController {
       var newHeight = $(gridItem).height();
       var boxHeader = $(gridItem).find('.box-header');
       var boxBody = $(gridItem).find('.box-body');
-      boxBody.height(newHeight-3.1*boxHeader.height());
+      boxBody.height(newHeight - 3.1 * boxHeader.height());
     };
 
-    var fullscreenPanel = function (domElement) {
+    var fullscreenPanel = function(domElement) {
       this.fullscreenElt = domElement;
       if (this.isFullScreenMode === true) {
         // exit fullscreen
@@ -138,11 +138,11 @@ class WorkspaceController {
 }
 
 var WorkspaceComponent = {
-    controller : WorkspaceController,
-    template : WorkspaceTemplate,
-    bindings : {
-      datasetId: '@'
-    }
+  controller: WorkspaceController,
+  template: WorkspaceTemplate,
+  bindings: {
+    datasetId: '@'
+  }
 };
 
 export default WorkspaceComponent;

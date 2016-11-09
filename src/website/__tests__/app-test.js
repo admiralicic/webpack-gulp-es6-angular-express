@@ -1,17 +1,19 @@
 import app from '../app';
-import {mockCarsDatasetApi} from 'tests_utils/mock_rest_api';
+import {
+  mockCarsDatasetApi
+} from 'tests_utils/mock_rest_api';
 
-describe('app', function () {
+describe('app', function() {
 
   var element, controller;
 
-  beforeEach(function () {
+  beforeEach(function() {
     angular.mock.module('app');
   });
 
-  describe('app controller and directive', function () {
+  describe('app controller and directive', function() {
 
-    beforeEach(angular.mock.inject(function ($rootScope, $componentController, $compile, $httpBackend) {
+    beforeEach(angular.mock.inject(function($rootScope, $componentController, $compile, $httpBackend) {
       mockCarsDatasetApi($httpBackend);
       var scope = $rootScope.$new();
       element = $compile('<app></app>')(scope);
@@ -19,7 +21,7 @@ describe('app', function () {
       controller = element.controller('app');
     }));
 
-    it('should have a datasets list defined with at least one dataset', function () {
+    it('should have a datasets list defined with at least one dataset', function() {
       expect(controller.datasets).toBeDefined();
       expect(controller.datasets.length).toBeGreaterThan(0);
     });

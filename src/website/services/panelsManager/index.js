@@ -18,7 +18,7 @@ class PanelsManager {
 
 }
 
-export default  {
+export default {
   serviceName: 'panelsManager',
   serviceClass: PanelsManager
 };

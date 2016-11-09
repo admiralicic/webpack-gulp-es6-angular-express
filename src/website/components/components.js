@@ -12,5 +12,5 @@ let componentsModule = angular.module('app.components', componentsName);
 
 export default {
   module: componentsModule,
-  componentsList : components
+  componentsList: components
 };

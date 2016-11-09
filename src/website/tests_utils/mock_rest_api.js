@@ -1,49 +1,42 @@
-export var carsSamples =
-[
-  {
-    "acceleration": 8.5,
-    "cylinders": 8,
-    "displacement": 440,
-    "horsepower": 215,
-    "id": 7,
-    "model": 70,
-    "mpg": 14,
-    "weight": 4312
-  },
-  {
-    "acceleration": 10,
-    "cylinders": 8,
-    "displacement": 455,
-    "horsepower": 225,
-    "id": 8,
-    "model": 70,
-    "mpg": 14,
-    "weight": 4425
-  },
-  {
-    "acceleration": 8.5,
-    "cylinders": 8,
-    "displacement": 390,
-    "horsepower": 190,
-    "id": 9,
-    "model": 70,
-    "mpg": 15,
-    "weight": 3850
-  },
-  {
-    "acceleration": 17.5,
-    "cylinders": 4,
-    "displacement": 133,
-    "horsepower": 115,
-    "id": 10,
-    "model": 70,
-    "mpg": 0,
-    "weight": 3090
-  }
-];
+export var carsSamples = [{
+  "acceleration": 8.5,
+  "cylinders": 8,
+  "displacement": 440,
+  "horsepower": 215,
+  "id": 7,
+  "model": 70,
+  "mpg": 14,
+  "weight": 4312
+}, {
+  "acceleration": 10,
+  "cylinders": 8,
+  "displacement": 455,
+  "horsepower": 225,
+  "id": 8,
+  "model": 70,
+  "mpg": 14,
+  "weight": 4425
+}, {
+  "acceleration": 8.5,
+  "cylinders": 8,
+  "displacement": 390,
+  "horsepower": 190,
+  "id": 9,
+  "model": 70,
+  "mpg": 15,
+  "weight": 3850
+}, {
+  "acceleration": 17.5,
+  "cylinders": 4,
+  "displacement": 133,
+  "horsepower": 115,
+  "id": 10,
+  "model": 70,
+  "mpg": 0,
+  "weight": 3090
+}];
 
-export var carsSamplesStats =
-{
+export var carsSamplesStats = {
   "count": 4,
   "propertiesTypes": {
     "acceleration": "number",

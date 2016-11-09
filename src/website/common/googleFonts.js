@@ -1,5 +1,7 @@
 window.WebFontConfig = {
-  google: { families: [ 'Open+Sans::latin', 'Raleway::latin' ] }
+  google: {
+    families: ['Open+Sans::latin', 'Raleway::latin']
+  }
 };
 
 (function() {

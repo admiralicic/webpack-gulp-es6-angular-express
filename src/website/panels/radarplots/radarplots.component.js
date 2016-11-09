@@ -1,4 +1,6 @@
-import {createPanelComponent} from '../panels';
+import {
+  createPanelComponent
+} from '../panels';
 
 import template from './radarplots.html';
 import './radarplots.css';
@@ -16,7 +18,7 @@ class RadarPlotsController {
     this.requestRandomData();
   }
 
-  requestRandomData(nbData=3) {
+  requestRandomData(nbData = 3) {
     this.datasetsSrv.getRandomNumericData(this.panelCtrl.workspaceCtrl.datasetId, nbData).then(carsData => {
       this.dataStats = carsData.dataStats;
       this.data = carsData.data;
@@ -29,14 +31,21 @@ class RadarPlotsController {
   createVisualization(element) {
     let processedData = _.map(this.data, d => {
       let ret = [];
-      _.forOwn(d, (v, k) => ret.push({'axis' : k,
-                                      'value' : (v - this.dataStats[k].min) /
-                                                (this.dataStats[k].max - this.dataStats[k].min)}));
+      _.forOwn(d, (v, k) => ret.push({
+        'axis': k,
+        'value': (v - this.dataStats[k].min) /
+          (this.dataStats[k].max - this.dataStats[k].min)
+      }));
       return ret;
     });
-    var margin = {top: 50, right: 10, bottom: 0, left: 10},
-        width = 1200,
-        height = 350;
+    var margin = {
+        top: 50,
+        right: 10,
+        bottom: 0,
+        left: 10
+      },
+      width = 1200,
+      height = 350;
 
     var radarChartOptions = {
       w: width,

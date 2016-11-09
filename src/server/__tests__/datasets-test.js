@@ -5,28 +5,28 @@ import request from 'supertest';
 describe('GET /datasets/cars', () => {
   it('should respond with a JSON array of cars data', (done) => {
     request(app)
-     .get('/datasets/cars')
-     .set('Accept', 'application/json')
-     .expect('Content-Type', /json/)
-     .expect(200)
-     .end(function(err, res){
-       if (err) return done(err);
-       res.body.should.be.Array();
-       done();
-     });
+      .get('/datasets/cars')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res) {
+        if (err) return done(err);
+        res.body.should.be.Array();
+        done();
+      });
   });
 
   it('should respond with a JSON array of cars from Europe', (done) => {
     request(app)
-     .get('/datasets/cars?origin=Europe')
-     .expect(200)
-     .end((err, res) => {
-       if (err) return done(err);
-       _.each(res.body, (car) => {
-         car.origin.should.equal('Europe');
-       });
-       done();
-     });
+      .get('/datasets/cars?origin=Europe')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        _.each(res.body, (car) => {
+          car.origin.should.equal('Europe');
+        });
+        done();
+      });
   });
 
 });
@@ -38,7 +38,7 @@ describe('GET /datasets/car/:id', () => {
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200)
-      .end(function(err, res){
+      .end(function(err, res) {
         if (err) return done(err);
         res.body.should.be.Object();
         res.body.should.have.property('acceleration');
@@ -63,14 +63,12 @@ describe('GET /datasets/car/:id', () => {
         res.body.weight.should.be.Number();
         done();
       });
-    }
-  );
+  });
 
   it('should return a 404 error code when requesting a car with an invalid id', (done) => {
     request(app)
       .get('/datasets/cars/450014540')
       .expect(404, done);
-    }
-  );
+  });
 
 });

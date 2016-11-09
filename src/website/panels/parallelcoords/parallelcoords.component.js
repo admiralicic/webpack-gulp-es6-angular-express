@@ -1,4 +1,6 @@
-import {createPanelComponent} from '../panels';
+import {
+  createPanelComponent
+} from '../panels';
 
 import template from './parallelcoords.html';
 import './parallelcoords.css';
@@ -91,10 +93,10 @@ class ParallelCoordsController {
     var vbW = width + margin.left + margin.right;
     var vbH = height + margin.top + margin.bottom;
 
-    let svg =  d3.select($(element).find('.parallel-coords-container')[0])
+    let svg = d3.select($(element).find('.parallel-coords-container')[0])
       .append("div")
       .classed("svg-container", true) //container class to make it responsive
-      .style("padding-bottom", (vbW/vbH)*100 + "%")
+      .style("padding-bottom", (vbW / vbH) * 100 + "%")
       .append("svg")
       .attr("preserveAspectRatio", "xMinYMin meet")
       .attr("viewBox", "0 0 " + vbW + " " + vbH)
@@ -177,11 +179,15 @@ class ParallelCoordsController {
       .attr("x", -8)
       .attr("width", 16);
 
-   this.setStraightLines = () => {svg.selectAll(".foreground").selectAll("path").attr("d", path);
-                                   svg.selectAll(".background").selectAll("path").attr("d", path);};
+    this.setStraightLines = () => {
+      svg.selectAll(".foreground").selectAll("path").attr("d", path);
+      svg.selectAll(".background").selectAll("path").attr("d", path);
+    };
 
-   this.setCurvedLines = () => {svg.selectAll(".foreground").selectAll("path").attr("d", curvePath);
-                                 svg.selectAll(".background").selectAll("path").attr("d", curvePath);};
+    this.setCurvedLines = () => {
+      svg.selectAll(".foreground").selectAll("path").attr("d", curvePath);
+      svg.selectAll(".background").selectAll("path").attr("d", curvePath);
+    };
 
   }
 }
